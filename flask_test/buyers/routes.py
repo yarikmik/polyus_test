@@ -56,7 +56,7 @@ def update_buyer(buyer_id):
 
 
 @buyers.route("/allbuyers/<int:buyer_id>/delete", methods=['GET', 'POST'])
-def delete_post(buyer_id):
+def delete_buyer(buyer_id):
     buyer = Buyers.query.get_or_404(buyer_id)
     db.session.delete(buyer)
     db.session.commit()
