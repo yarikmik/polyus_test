@@ -54,9 +54,9 @@
   <tbody>
   {% for buyer in buyers.items %}
     <tr>
-      <th scope="row">{{ loop.counter }}</th>
+      <th scope="row">{{ loop.index }}</th>
       <td>{{ buyer.username }}</td>
-      <td>{{ buyer.year_of_birth }}</td>
+      <td>{{ buyer.year_of_birth.strftime('%Y') }}</td>
       <td>{{ buyer.gender }}</td>
       <td>{{ buyer.registration_date.strftime('%d %b %Y %I:%M %p') }}</td>
       <td>{{ buyer.consent }}</td>

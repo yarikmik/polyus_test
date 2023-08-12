@@ -56,9 +56,9 @@
   <tbody>
   {% for purchase in purchases.items %}
     <tr>
-      <th scope="row"></th>
-      <td>{{ purchase.purchase_date }}</td>
-      <td>{{ purchase.buyer_name }}</td>
+      <th scope="row">{{ loop.index }}</th>
+      <td>{{ purchase.purchase_date.strftime('%d %b %Y') }}</td>
+      <td>{{ purchase.username }}</td>
       <td>{{ purchase.product_name }}</td>
       <td>{{ purchase.count }}</td>
       <td>{{ purchase.unit_cost }}</td>

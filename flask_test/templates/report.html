@@ -47,7 +47,7 @@
   <tbody>
   {% for row in report_rows.items %}
     <tr>
-      <th scope="row"></th>
+      <th scope="row">{{ loop.index }}</th>
       <td>{{ row.username }}</td>
       <td>{{ row.total }}</td>
     </tr>

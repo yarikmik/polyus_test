@@ -53,7 +53,7 @@
   <tbody>
   {% for product in products.items %}
     <tr>
-      <th scope="row">{{ loop.counter }}</th>
+      <th scope="row">{{ loop.index }}</th>
       <td>{{ product.product_name }}</td>
       <td>{{ product.purchase_cost }}</td>
       <td>{{ product.selling_cost }}</td>

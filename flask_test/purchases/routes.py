@@ -9,15 +9,11 @@ purchases = Blueprint('purchases', __name__)
 @purchases.route("/allpurchases")
 def allpurchases():
     purchase = request.args.get('page', 1, type=int)
-    purchases = Purchases.query.order_by(Purchases.total_cost.desc()).paginate(page=purchase, per_page=5)
-    for p in purchases:
-        # для отображения имени пользователя по его id
-        buyer = Buyers.query.filter(Buyers.id == p.buyer_id).first()
-        p.buyer_name = buyer.username
-
-        # для отображения наименование товара по его id
-        product = Products.query.filter(Products.id == p.product_id).first()
-        p.product_name = product.product_name
+    purchases = db.session.query(Purchases.id, Purchases.purchase_date, Purchases.count, Purchases.total_cost,
+                                 Purchases.unit_cost, Buyers.username, Products.product_name) \
+                            .join(Buyers, Purchases.buyer_id == Buyers.id) \
+                            .join(Products, Purchases.product_id == Products.id) \
+                            .order_by(Purchases.total_cost.desc()).paginate(page=purchase, per_page=5)
     return render_template('allpurchases.html', purchases=purchases)
 
 
@@ -48,8 +44,6 @@ def new_purchase():
 def update_purchase(purchase_id):
     purchase = Purchases.query.get_or_404(purchase_id)
     form = AddPurchasesForm()
-
-
 
     if form.validate_on_submit():
         #  экземпляры товара и покупателя по имени
