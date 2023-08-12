@@ -20,8 +20,14 @@ def new_product():
         product = Products(product_name=form.product_name.data,
                            purchase_cost=form.purchase_cost.data,
                            selling_cost=form.selling_cost.data)
-        db.session.add(product)
-        db.session.commit()
+
+        try:
+            db.session.add(product)
+            db.session.commit()
+        except Exception:
+            flash('Ошибка добавления продукта', 'warning')
+            return redirect(url_for('products.allproducts'))
+
         flash('Продукт добавлен', 'success')
         return redirect(url_for('products.allproducts'))
     return render_template('add_products.html',
@@ -37,7 +43,13 @@ def update_product(product_id):
         product.product_name = form.product_name.data
         product.purchase_cost = form.purchase_cost.data
         product.selling_cost = form.selling_cost.data
-        db.session.commit()
+
+        try:
+            db.session.commit()
+        except Exception:
+            flash('Ошибка обновления продукта', 'warning')
+            return redirect(url_for('products.allproducts'))
+
         flash('Продукт обновлен', 'success')
         return redirect(url_for('products.allproducts'))
     elif request.method == 'GET':

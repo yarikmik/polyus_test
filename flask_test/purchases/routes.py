@@ -11,15 +11,22 @@ def allpurchases():
     purchase = request.args.get('page', 1, type=int)
     purchases = db.session.query(Purchases.id, Purchases.purchase_date, Purchases.count, Purchases.total_cost,
                                  Purchases.unit_cost, Buyers.username, Products.product_name) \
-                            .join(Buyers, Purchases.buyer_id == Buyers.id) \
-                            .join(Products, Purchases.product_id == Products.id) \
-                            .order_by(Purchases.total_cost.desc()).paginate(page=purchase, per_page=5)
+        .join(Buyers, Purchases.buyer_id == Buyers.id) \
+        .join(Products, Purchases.product_id == Products.id) \
+        .order_by(Purchases.total_cost.desc()).paginate(page=purchase, per_page=5)
     return render_template('allpurchases.html', purchases=purchases)
 
 
 @purchases.route("/allpurchases/new", methods=['GET', 'POST'])
 def new_purchase():
     form = AddPurchasesForm()
+
+    # обновляем список доступных товаров и продуктов
+    buyer_list = [(u.username, u.username) for u in db.session.query(Buyers).all()]
+    product_list = [(p.product_name, p.product_name) for p in db.session.query(Products).all()]
+    form.buyer_name.choices = buyer_list
+    form.product_name.choices = product_list
+
     if form.validate_on_submit():
         # дергаем экземпляры товара и покупателя по имени
         buyer = Buyers.query.filter_by(username=form.buyer_name.data).first_or_404()

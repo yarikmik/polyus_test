@@ -24,8 +24,14 @@ def new_buyer():
                        # registration_date=form.registration_date.data,
                        consent=form.consent.data,
                        image_file=form.image_file.data)
-        db.session.add(buyer)
-        db.session.commit()
+
+        try:
+            db.session.add(buyer)
+            db.session.commit()
+        except Exception:
+            flash('Ошибка добавления покупателя', 'warning')
+            return redirect(url_for('buyers.allbuyers'))
+
         flash('Покупатель добавлен', 'success')
         return redirect(url_for('buyers.allbuyers'))
     return render_template('add_buyers.html',
@@ -43,7 +49,13 @@ def update_buyer(buyer_id):
         buyer.gender = form.gender.data
         buyer.consent = form.consent.data
         buyer.image_file = form.image_file.data if form.image_file.data else 'default.png'
-        db.session.commit()
+
+        try:
+            db.session.commit()
+        except Exception:
+            flash('Ошибка обновления покупателя', 'warning')
+            return redirect(url_for('buyers.allbuyers'))
+
         flash('Покупатель обновлен', 'success')
         return redirect(url_for('buyers.allbuyers'))
     elif request.method == 'GET':
