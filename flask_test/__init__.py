@@ -31,6 +31,8 @@ def create_app():
         from flask_test.purchases.routes import purchases
         app.register_blueprint(purchases)
 
-        return app
+        #  регистрация report
+        from flask_test.report.routes import report
+        app.register_blueprint(report)
 
-# csrf = CSRFProtect(create_app())
+        return app

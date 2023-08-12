@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+
+{% block head %}
+  <style>
+    .card{
+      border-radius: 25px;
+      /* border-top-right-radius: 25px;
+      border-bottom-left-radius: 25px; */
+      background-color:  white;
+      box-shadow: 10px 15px 10px #4a4e69;
+      width: 92%;
+    }
+
+    .card-title{
+      margin-bottom: 0 !important;
+      font-family: 'Bebas Neue', cursive;
+    }
+
+    a{
+      color: #003049 !important;
+      text-decoration: none;
+    }
+
+    small{
+      color: lightslategray;
+    }
+
+    p{
+      color: rgb(43, 37, 37);
+    }
+
+
+  </style>
+{% endblock head %}
+
+{% block content %}
+<!--<a class="btn btn-light mb-3" href="{{ url_for('purchases.new_purchase') }}">Добавить покупку</a>-->
+    <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Покупатель</th>
+      <th scope="col">Сумма покупок</th>
+
+    </tr>
+  </thead>
+  <tbody>
+  {% for row in report_rows.items %}
+    <tr>
+      <th scope="row"></th>
+      <td>{{ row.username }}</td>
+      <td>{{ row.total }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+  {% for page_num in report_rows.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+    {% if page_num %}
+      {% if report_rows.page == page_num %}
+        <a class="btn btn-secondary mb-4" href="{{ url_for('report.build_report', page=page_num) }}">{{ page_num }}</a>
+      {% else %}
+        <a class="btn btn-outline-secondary mb-4" href="{{ url_for('report.build_report', page=page_num) }}">{{ page_num }}</a>
+      {% endif %}
+    {% else %}
+      ...
+    {% endif %}
+  {% endfor %}
+{% endblock content %}
