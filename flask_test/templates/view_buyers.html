@@ -33,15 +33,17 @@
 
 {% block content %}
 <div class="card" style="width: 18rem;">
-  <img class="card-img-top" src="..." alt="Buyers image">
+  <img class="card-img-top" src="{{ image_file }}" alt="Buyers image">
   <div class="card-body">
     <h5 class="card-title">{{ buyer.username }}</h5>
     <p class="card-text">Год рождения: {{ buyer.year_of_birth.strftime('%Y') }}</p>
     <p class="card-text">Пол: {{ buyer.gender }}</p>
     <p class="card-text">Дата регистрации: {{ buyer.registration_date.strftime('%d %b %Y %I:%M %p') }}</p>
     <p class="card-text">Согласие на обработку: {{ buyer.consent }}</p>
+    <br>
     <a class="btn btn-info" href="{{ url_for('buyers.update_buyer', buyer_id=buyer.id) }}">Изменить</a>
     <a class="btn btn-info" href="{{ url_for('buyers.allbuyers') }}">Все покупатели</a>
+    <a class="btn btn-danger" href="{{ url_for('buyers.delete_buyer', buyer_id=buyer.id) }}">Удалить</a>
 
   </div>
 </div>

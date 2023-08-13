@@ -1,8 +1,8 @@
-from flask import render_template, Blueprint
 from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_test import db
 from flask_test.models import Buyers
 from flask_test.buyers.forms import (AddBuyersForm)
+from flask_test.buyers.utils import save_picture
 
 buyers = Blueprint('buyers', __name__)
 
@@ -17,7 +17,9 @@ def allbuyers():
 @buyers.route("/allbuyers/<int:buyer_id>/view", methods=['GET', 'POST'])
 def view_buyer(buyer_id):
     buyer = Buyers.query.get_or_404(buyer_id)
-    return render_template('view_buyers.html', buyer=buyer)
+    image_file = url_for('static', filename='profile_pics/' + buyer.image_file)
+    print('image_file', image_file)
+    return render_template('view_buyers.html', buyer=buyer, image_file=image_file)
 
 
 @buyers.route("/allbuyers/new", methods=['GET', 'POST'])
@@ -50,11 +52,12 @@ def update_buyer(buyer_id):
     buyer = Buyers.query.get_or_404(buyer_id)
     form = AddBuyersForm()
     if form.validate_on_submit():
+
         buyer.username = form.username.data
         buyer.year_of_birth = form.year_of_birth.data
         buyer.gender = form.gender.data
         buyer.consent = form.consent.data
-        buyer.image_file = form.image_file.data if form.image_file.data else 'default.png'
+        buyer.image_file = save_picture(form.image_file.data) if form.image_file.data else 'default.png'
 
         try:
             db.session.commit()
