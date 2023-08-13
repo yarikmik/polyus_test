@@ -58,7 +58,7 @@
     <tr>
       <th scope="row">{{ loop.index }}</th>
       <td>{{ purchase.purchase_date.strftime('%d %b %Y') }}</td>
-      <td><a href="{{ url_for('buyers.update_buyer', buyer_id=purchase.buyer_id) }}">{{ purchase.username }}</a></td>
+      <td><a href="{{ url_for('buyers.view_buyer', buyer_id=purchase.buyer_id) }}">{{ purchase.username }}</a></td>
       <td>{{ purchase.product_name }}</td>
       <td>{{ purchase.count }}</td>
       <td>{{ purchase.unit_cost }}</td>

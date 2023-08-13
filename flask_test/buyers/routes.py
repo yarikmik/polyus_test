@@ -14,6 +14,12 @@ def allbuyers():
     return render_template('allbuyers.html', buyers=buyers)
 
 
+@buyers.route("/allbuyers/<int:buyer_id>/view", methods=['GET', 'POST'])
+def view_buyer(buyer_id):
+    buyer = Buyers.query.get_or_404(buyer_id)
+    return render_template('view_buyers.html', buyer=buyer)
+
+
 @buyers.route("/allbuyers/new", methods=['GET', 'POST'])
 def new_buyer():
     form = AddBuyersForm()

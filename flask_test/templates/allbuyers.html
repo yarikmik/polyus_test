@@ -61,7 +61,8 @@
       <td>{{ buyer.registration_date.strftime('%d %b %Y %I:%M %p') }}</td>
       <td>{{ buyer.consent }}</td>
       <td>
-          <a class="btn btn-info" href="{{ url_for('buyers.update_buyer', buyer_id=buyer.id) }}">Изменить</a>
+<!--          <a class="btn btn-info" href="{{ url_for('buyers.update_buyer', buyer_id=buyer.id) }}">Изменить</a>-->
+          <a class="btn btn-info" href="{{ url_for('buyers.view_buyer', buyer_id=buyer.id) }}">Просмотр</a>
           <a class="btn btn-danger" href="{{ url_for('buyers.delete_buyer', buyer_id=buyer.id) }}">Удалить</a>
       </td>
     </tr>
