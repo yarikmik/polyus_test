@@ -1,9 +1,7 @@
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileAllowed
 from flask_test import db
 from flask_test.models import Buyers, Products
-from wtforms import StringField, SubmitField, BooleanField, SelectField, DateField, FloatField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from wtforms import SubmitField, SelectField, DateField, FloatField
 
 
 class AddPurchasesForm(FlaskForm):
@@ -16,4 +14,3 @@ class AddPurchasesForm(FlaskForm):
     unit_cost = FloatField('Стоимость за единицу:')
     total_cost = FloatField('Сумма:')
     submit = SubmitField('Подтвердить')
-

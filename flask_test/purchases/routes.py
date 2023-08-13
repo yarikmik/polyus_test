@@ -11,9 +11,9 @@ def allpurchases():
     purchase = request.args.get('page', 1, type=int)
     purchases = db.session.query(Purchases.id, Purchases.purchase_date, Purchases.count, Purchases.total_cost,
                                  Purchases.unit_cost, Purchases.buyer_id, Buyers.username, Products.product_name) \
-                            .join(Buyers, Purchases.buyer_id == Buyers.id) \
-                            .join(Products, Purchases.product_id == Products.id) \
-                            .order_by(Purchases.total_cost.desc()).paginate(page=purchase, per_page=5)
+        .join(Buyers, Purchases.buyer_id == Buyers.id) \
+        .join(Products, Purchases.product_id == Products.id) \
+        .order_by(Purchases.purchase_date.desc()).paginate(page=purchase, per_page=5)
     return render_template('allpurchases.html', purchases=purchases)
 
 
