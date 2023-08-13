@@ -1,7 +1,6 @@
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, SubmitField, BooleanField, SelectField, DateField, FloatField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from wtforms import StringField, SubmitField, FloatField
+from wtforms.validators import DataRequired, Length
 
 
 class AddProductsForm(FlaskForm):
@@ -9,4 +8,3 @@ class AddProductsForm(FlaskForm):
     purchase_cost = FloatField('Цена закупки:')
     selling_cost = FloatField('Цена продажи:')
     submit = SubmitField('Подтвердить')
-

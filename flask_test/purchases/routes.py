@@ -8,6 +8,7 @@ purchases = Blueprint('purchases', __name__)
 
 @purchases.route("/allpurchases")
 def allpurchases():
+    """таблица всех покупок"""
     purchase = request.args.get('page', 1, type=int)
     purchases = db.session.query(Purchases.id, Purchases.purchase_date, Purchases.count, Purchases.total_cost,
                                  Purchases.unit_cost, Purchases.buyer_id, Buyers.username, Products.product_name) \
@@ -19,6 +20,7 @@ def allpurchases():
 
 @purchases.route("/allpurchases/new", methods=['GET', 'POST'])
 def new_purchase():
+    """новая покупка"""
     form = AddPurchasesForm()
 
     # обновляем список доступных товаров и продуктов
@@ -49,6 +51,7 @@ def new_purchase():
 
 @purchases.route("/allpurchases/<int:purchase_id>/update", methods=['GET', 'POST'])
 def update_purchase(purchase_id):
+    """изменение покупки"""
     purchase = Purchases.query.get_or_404(purchase_id)
     form = AddPurchasesForm()
 
@@ -82,6 +85,7 @@ def update_purchase(purchase_id):
 
 @purchases.route("/allpurchases/<int:purchase_id>/delete", methods=['GET', 'POST'])
 def delete_purchase(purchase_id):
+    """удаление покупки"""
     purchase = Purchases.query.get_or_404(purchase_id)
     db.session.delete(purchase)
     db.session.commit()

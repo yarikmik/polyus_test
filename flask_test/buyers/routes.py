@@ -9,6 +9,7 @@ buyers = Blueprint('buyers', __name__)
 
 @buyers.route("/allbuyers")
 def allbuyers():
+    """Таблица всех покупателей"""
     page = request.args.get('page', 1, type=int)
     buyers = Buyers.query.order_by(Buyers.registration_date.desc()).paginate(page=page, per_page=5)
     return render_template('allbuyers.html', buyers=buyers)
@@ -16,6 +17,7 @@ def allbuyers():
 
 @buyers.route("/allbuyers/<int:buyer_id>/view", methods=['GET', 'POST'])
 def view_buyer(buyer_id):
+    """Карточка нового покупателя"""
     buyer = Buyers.query.get_or_404(buyer_id)
     image_file = url_for('static', filename='profile_pics/' + buyer.image_file)
     print('image_file', image_file)
@@ -24,6 +26,7 @@ def view_buyer(buyer_id):
 
 @buyers.route("/allbuyers/new", methods=['GET', 'POST'])
 def new_buyer():
+    """Добавление нового покупателя"""
     form = AddBuyersForm()
     if form.validate_on_submit():
         buyer = Buyers(username=form.username.data,
@@ -49,6 +52,7 @@ def new_buyer():
 
 @buyers.route("/allbuyers/<int:buyer_id>/update", methods=['GET', 'POST'])
 def update_buyer(buyer_id):
+    """Обновление покупателя"""
     buyer = Buyers.query.get_or_404(buyer_id)
     form = AddBuyersForm()
     if form.validate_on_submit():
@@ -78,6 +82,7 @@ def update_buyer(buyer_id):
 
 @buyers.route("/allbuyers/<int:buyer_id>/delete", methods=['GET', 'POST'])
 def delete_buyer(buyer_id):
+    """Удаление покупателя"""
     buyer = Buyers.query.get_or_404(buyer_id)
     db.session.delete(buyer)
     db.session.commit()

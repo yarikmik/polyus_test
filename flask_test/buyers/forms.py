@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, SubmitField, BooleanField, SelectField, DateField, FloatField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from wtforms import StringField, SubmitField, BooleanField, SelectField, DateField
+from wtforms.validators import DataRequired, Length
 
 
 class AddBuyersForm(FlaskForm):

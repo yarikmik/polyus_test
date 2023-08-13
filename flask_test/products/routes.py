@@ -8,6 +8,7 @@ products = Blueprint('products', __name__)
 
 @products.route("/allproducts")
 def allproducts():
+    """таблица всех товаров"""
     page = request.args.get('page', 1, type=int)
     products = Products.query.order_by(Products.selling_cost.desc()).paginate(page=page, per_page=5)
     return render_template('allproducts.html', products=products)
@@ -15,6 +16,7 @@ def allproducts():
 
 @products.route("/allproducts/new", methods=['GET', 'POST'])
 def new_product():
+    """добавить новый товар"""
     form = AddProductsForm()
     if form.validate_on_submit():
         product = Products(product_name=form.product_name.data,
@@ -37,6 +39,7 @@ def new_product():
 
 @products.route("/allproducts/<int:product_id>/update", methods=['GET', 'POST'])
 def update_product(product_id):
+    """обновление товара"""
     product = Products.query.get_or_404(product_id)
     form = AddProductsForm()
     if form.validate_on_submit():
@@ -61,6 +64,7 @@ def update_product(product_id):
 
 @products.route("/allproducts/<int:product_id>/delete", methods=['GET', 'POST'])
 def delete_product(product_id):
+    """удаление товара"""
     product = Products.query.get_or_404(product_id)
     db.session.delete(product)
     db.session.commit()

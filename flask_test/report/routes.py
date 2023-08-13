@@ -1,4 +1,4 @@
-from flask import render_template, url_for, flash, redirect, request, Blueprint
+from flask import render_template, request, Blueprint
 from sqlalchemy import func, desc
 from flask_test import db
 from flask_test.models import Purchases, Buyers
@@ -9,13 +9,14 @@ report = Blueprint('report', __name__)
 
 @report.route("/report", methods=['GET', 'POST'])
 def build_report():
+    """Таблица отчета по покупателям и их общей сумме покупок"""
     form = SelectDateFrom()
     report_page = request.args.get('page', 1, type=int)
 
     if form.validate_on_submit():
         # если задействован фильтр по времении
         date_from = form.date_from.data
-        print('date_from',date_from)
+        print('date_from', date_from)
         report_rows = db.session.query(Purchases.purchase_date, Buyers.username,
                                        func.sum(Purchases.total_cost).label('total')) \
             .join(Buyers, Purchases.buyer_id == Buyers.id) \

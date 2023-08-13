@@ -10,7 +10,6 @@ db = SQLAlchemy(app)
 
 class Buyers(db.Model):
     """модель покупателей"""
-    # __tablename__ = 'buyers'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(30), unique=True, nullable=False)
     year_of_birth = db.Column(db.Date, nullable=False, default=datetime.utcnow)
@@ -22,7 +21,6 @@ class Buyers(db.Model):
 
 class Products(db.Model):
     """модель товаров"""
-    # __tablename__ = 'products'
     id = db.Column(db.Integer, primary_key=True)
     product_name = db.Column(db.String(20), unique=True, nullable=False)
     purchase_cost = db.Column(db.Float)
@@ -31,7 +29,6 @@ class Products(db.Model):
 
 class Purchases(db.Model):
     """модель покупок"""
-    # __tablename__ = 'purchases'
     id = db.Column(db.Integer, primary_key=True)
     buyer_id = db.Column(db.Integer, db.ForeignKey('buyers.id'), nullable=False)
     purchase_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
